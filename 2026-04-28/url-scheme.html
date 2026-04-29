@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slack-to-Advisor clickable links &mdash; Apr 28</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="masthead">
+  <div class="name">Workspaces &nbsp;&middot;&nbsp; Standups</div>
+  <div class="date">Tuesday &mdash; April 28, 2026</div>
+</div>
+<article>
+  <a class="back" href="./">&larr; Back to standup</a>
+  <p class="kicker">Item 3</p>
+  <h1>Clickable Slack-to-Advisor links</h1>
+
+  <p>A proper deep-link protocol between the Slack agent and the Advisor desktop app. Previously one hardcoded URL shape for one view type; now six view types with a documented, versioned protocol.</p>
+
+  <h2>What you can click</h2>
+  <p>In a Slack message from the bot, any of these six URL shapes will open the right view in Advisor:</p>
+  <ul>
+    <li>A specific Claude Code session (opens the Code tab, activates that session)</li>
+    <li>A Slack-authored session (same as above, but self-documents it came from the bot)</li>
+    <li>A specific plan file (opens the Plans tab to that file)</li>
+    <li>A specific task (opens the Tasks tab to that task)</li>
+    <li>A specific day of Advisor thread history (opens Advisor to that day)</li>
+    <li>A project&rsquo;s task list (opens Tasks, scrolls to that project&rsquo;s group)</li>
+  </ul>
+
+  <h2>How it&rsquo;s split</h2>
+  <p>Two codebases, one contract. The Advisor repo holds the receiver (parses the URL, routes to the right tab). The Slack bot repo holds the sender (a helper function every message builder can use). The same <code>url-schema.md</code> document lives byte-identical in both repos &mdash; single source of truth.</p>
+
+  <h2>If something goes wrong</h2>
+  <p>Unknown URLs surface a clear toast in Advisor rather than crashing. Missing items (a task that&rsquo;s since been removed, a plan whose path changed) also toast. Nothing silent.</p>
+
+  <h2>Coordination</h2>
+  <p>Planning went through a formal plan-mode flow with four decision points confirmed before implementation. Implementation landed in 9 commits across the two repos, each commit independently buildable and green.</p>
+
+  <h2>What&rsquo;s next</h2>
+  <p>End-to-end click-through deferred until the next production rebuild of Advisor &mdash; dev-mode launch has a known environment issue on the current host. Unit tests + a URL-routing trace script cover the parser side fully.</p>
+</article>
+</body>
+</html>

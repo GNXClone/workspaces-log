@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playwright UI test harness &mdash; Apr 28</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="masthead">
+  <div class="name">Workspaces &nbsp;&middot;&nbsp; Standups</div>
+  <div class="date">Tuesday &mdash; April 28, 2026</div>
+</div>
+<article>
+  <a class="back" href="./">&larr; Back to standup</a>
+  <p class="kicker">Item 7</p>
+  <h1>Playwright UI test harness</h1>
+
+  <p>A proper UI-level test harness for Advisor. Until now, we had unit tests for individual functions but nothing that actually launched the app and clicked things. That left a whole class of bugs &mdash; layout, keyboard shortcuts, tab transitions &mdash; outside the test net.</p>
+
+  <h2>What landed</h2>
+  <ul>
+    <li><strong>Playwright</strong> with Electron support, added as a dev dependency.</li>
+    <li>Harness at <code>tests/ui/</code>, runnable via <code>npm run test:ui</code>.</li>
+    <li>Tests launch the pre-built app bundle (the same one the installer ships) rather than a dev-mode facsimile, so they exercise real production code.</li>
+    <li>A <strong>Bedrock mock</strong> &mdash; setting one environment variable short-circuits every AI-service call to deterministic stubs. Tests require no AWS credentials, no live network.</li>
+  </ul>
+
+  <h2>Initial coverage</h2>
+  <p>Smoke test per tab (does it load?), ambient strip renders with the expected content, Code tab&rsquo;s hidden-sidebar layout is visually correct (regression protection for the fix shipped earlier today), and the Cmd+1 through Cmd+5 keyboard shortcuts switch tabs correctly.</p>
+
+  <h2>Failure screenshots are annotated</h2>
+  <p>When a test fails, the harness captures the screenshot and overlays arrows, boxes, and labels marking the broken region using <code>sharp</code> (an image-manipulation library). The Playwright report shows the annotated image, not raw stdout. This is the part that makes UI test failures actionable &mdash; you see <em>what</em> broke, not just that it broke.</p>
+
+  <h2>Two gotchas documented</h2>
+  <ul>
+    <li>The Bedrock-mock env var is read once at module load; flipping it mid-process doesn&rsquo;t help.</li>
+    <li>Launching the tests from a non-GUI shell (certain sudo contexts) causes an Electron parent-death crash before the first window opens. Workaround is a small launchd wrap, documented in the implementation notes.</li>
+  </ul>
+
+  <h2>Future coverage</h2>
+  <p>New backlog items add coverage as features ship &mdash; the harness is the floor, not a one-time deliverable.</p>
+</article>
+</body>
+</html>

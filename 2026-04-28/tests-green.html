@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tests green in both repos &mdash; Apr 28</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="masthead">
+  <div class="name">Workspaces &nbsp;&middot;&nbsp; Standups</div>
+  <div class="date">Tuesday &mdash; April 28, 2026</div>
+</div>
+<article>
+  <a class="back" href="./">&larr; Back to standup</a>
+  <p class="kicker">Item 5</p>
+  <h1>Shared spec, both suites green</h1>
+
+  <p>The <code>url-schema.md</code> document lives byte-identical in both repos &mdash; advisor and the Slack bot. If the two ever drift, the discrepancy is a blocker, not an oversight. A <code>diff -q</code> at report time confirmed they match.</p>
+
+  <h2>Test counts</h2>
+  <ul>
+    <li><strong>Advisor:</strong> 71 tests passing. 56 from before, 15 new (covering every URL shape plus fallback reasons &mdash; malformed URL, bad ID, bad date, wrong scheme, unknown route).</li>
+    <li><strong>Slack bot:</strong> 201 tests passing. 185 from before, 16 new (covering every URL-builder shape plus validation errors, version-tail enforcement, and the per-install scheme indirection).</li>
+  </ul>
+
+  <p>One existing test expected the pre-versioning URL shape; updated to expect the new version tail. That&rsquo;s the only pre-existing test that needed a touch.</p>
+
+  <h2>Nothing pushed</h2>
+  <p>Every commit is local. Both repos are clean trees on their working branches. Merge and push happen only on explicit go-ahead &mdash; standard policy for shared branches.</p>
+
+  <h2>Where to look</h2>
+  <ul>
+    <li>Advisor: <code>feat/pittsbot-deep-link-scheme</code> &mdash; 5 commits for the URL scheme work, plus the 3 UI polish commits.</li>
+    <li>Slack bot: <code>fix/pb-backlog-2026-04-28</code> &mdash; 4 commits for the URL scheme work.</li>
+  </ul>
+</article>
+</body>
+</html>
