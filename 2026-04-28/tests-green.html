@@ -3,40 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tests green in both repos &mdash; Apr 28</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Tests green &mdash; Tue Apr 28</title>
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<div class="masthead">
-  <div class="name">Workspaces &nbsp;&middot;&nbsp; Standups</div>
-  <div class="date">Tuesday &mdash; April 28, 2026</div>
+<div class="wrap">
+<header>
+  <div class="left">
+    <span class="title">workspaces-log</span>
+    <span class="date">Tue 2026-04-28</span>
+  </div>
+  <nav><a href="./">&larr; standup</a></nav>
+</header>
+
+<h1>Tests green, both repos</h1>
+
+<dl class="kv">
+  <dt>advisor</dt>   <dd><span class="status-ok">71 pass</span> (56 prior + 15 new parseDeepLink cases)</dd>
+  <dt>pittsbot</dt>  <dd><span class="status-ok">201 pass</span> (185 prior + 16 new advisor_urls cases)</dd>
+  <dt>spec</dt>      <dd><code>docs/url-schema.md</code> byte-identical in both repos &mdash; <code>diff -q</code> confirms</dd>
+  <dt>pushed</dt>    <dd>no &mdash; local commits only</dd>
+</dl>
+
+<h2>What the new tests cover</h2>
+<ul class="dashed">
+  <li>Every URL shape parses correctly on both sides.</li>
+  <li>Fallback reasons: malformed URL, bad ID, bad date, scheme mismatch, unknown route.</li>
+  <li>Version-tail enforcement on emit.</li>
+  <li>Per-install scheme indirection via monkeypatched config.</li>
+</ul>
+
+<h2>One existing test updated</h2>
+<ul class="dashed">
+  <li>A PittsBot test expected the pre-versioning URL shape. Updated to expect the new <code>&amp;v=1</code> tail.</li>
+  <li>All other URL-shape assertions in that file exercise <code>pb-notify</code> argv pass-through and were untouched.</li>
+</ul>
+
+<div class="ask">
+  <span class="label">Ask</span>
+  <a href="https://github.com/GNXClone/workspaces-log/issues/new?title=%5BTests%5D+Question&labels=standup-question%2Ctests" target="_blank" rel="noopener">Ask about the test status</a>
 </div>
-<article>
-  <a class="back" href="./">&larr; Back to standup</a>
-  <p class="kicker">Item 5</p>
-  <h1>Shared spec, both suites green</h1>
-
-  <p>The <code>url-schema.md</code> document lives byte-identical in both repos &mdash; advisor and the Slack bot. If the two ever drift, the discrepancy is a blocker, not an oversight. A <code>diff -q</code> at report time confirmed they match.</p>
-
-  <h2>Test counts</h2>
-  <ul>
-    <li><strong>Advisor:</strong> 71 tests passing. 56 from before, 15 new (covering every URL shape plus fallback reasons &mdash; malformed URL, bad ID, bad date, wrong scheme, unknown route).</li>
-    <li><strong>Slack bot:</strong> 201 tests passing. 185 from before, 16 new (covering every URL-builder shape plus validation errors, version-tail enforcement, and the per-install scheme indirection).</li>
-  </ul>
-
-  <p>One existing test expected the pre-versioning URL shape; updated to expect the new version tail. That&rsquo;s the only pre-existing test that needed a touch.</p>
-
-  <h2>Nothing pushed</h2>
-  <p>Every commit is local. Both repos are clean trees on their working branches. Merge and push happen only on explicit go-ahead &mdash; standard policy for shared branches.</p>
-
-  <h2>Where to look</h2>
-  <ul>
-    <li>Advisor: <code>feat/pittsbot-deep-link-scheme</code> &mdash; 5 commits for the URL scheme work, plus the 3 UI polish commits.</li>
-    <li>Slack bot: <code>fix/pb-backlog-2026-04-28</code> &mdash; 4 commits for the URL scheme work.</li>
-  </ul>
-</article>
+<div class="foot">local commits &middot; nothing pushed</div>
+</div>
 </body>
 </html>

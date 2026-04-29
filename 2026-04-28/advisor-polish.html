@@ -3,35 +3,56 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Advisor UI polish &mdash; Apr 28</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Advisor polish &mdash; Tue Apr 28</title>
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<div class="masthead">
-  <div class="name">Workspaces &nbsp;&middot;&nbsp; Standups</div>
-  <div class="date">Tuesday &mdash; April 28, 2026</div>
+<div class="wrap">
+<header>
+  <div class="left">
+    <span class="title">workspaces-log</span>
+    <span class="date">Tue 2026-04-28</span>
+  </div>
+  <nav><a href="./">&larr; standup</a></nav>
+</header>
+
+<h1>Three Advisor UI polish fixes</h1>
+
+<dl class="kv">
+  <dt>repo</dt>    <dd>advisor</dd>
+  <dt>branch</dt>  <dd><code>feat/pittsbot-deep-link-scheme</code></dd>
+  <dt>commits</dt> <dd><code>cb84e1c</code> &middot; <code>8550281</code> &middot; <code>9ccab24</code></dd>
+  <dt>tests</dt>   <dd><span class="status-ok">&#10003; 71 pass, 5 new</span></dd>
+  <dt>pushed</dt>  <dd>no</dd>
+</dl>
+
+<h2>1. Hidden-sidebar layout (CC-B-005)</h2>
+<ul class="dashed">
+  <li>Hiding sidebar left top-bar overlapping ambient strip + first line of content.</li>
+  <li>Title bar is now a flex child that always takes 44px; content reflows cleanly in both states.</li>
+  <li>Code tab also gets a <em>project / session</em> breadcrumb in the top bar when sidebar is hidden.</li>
+</ul>
+
+<h2>2. Sidebar-toggle hover tooltip (CC-B-006)</h2>
+<ul class="dashed">
+  <li>New <code>Tooltip</code> primitive added to the design system.</li>
+  <li>State-aware label: &ldquo;Show sidebar&rdquo; when hidden, &ldquo;Hide sidebar&rdquo; when visible.</li>
+  <li>Documented in the UI guidelines so future hover labels go through it, not browser <code>title=""</code>.</li>
+</ul>
+
+<h2>3. Manual <code>/rename</code> wins over synth (CC-B-007)</h2>
+<ul class="dashed">
+  <li>When a session was renamed via <code>/rename</code> in the CLI, Advisor was overwriting the new name with an AI-generated one on the next refresh.</li>
+  <li>Now: if a user-set name exists in the session log, Advisor uses it verbatim and skips synthesis.</li>
+  <li>Cache entry carries a distinct source marker so downstream readers can tell &ldquo;user-set&rdquo; from &ldquo;bedrock-sonnet.&rdquo;</li>
+  <li>5 new unit tests cover precedence + re-rename invalidation.</li>
+</ul>
+
+<div class="ask">
+  <span class="label">Ask</span>
+  <a href="https://github.com/GNXClone/workspaces-log/issues/new?title=%5BAdvisor+polish%5D+Question&labels=standup-question%2Cadvisor-ui" target="_blank" rel="noopener">Ask about the polish fixes</a>
 </div>
-<article>
-  <a class="back" href="./">&larr; Back to standup</a>
-  <p class="kicker">Item 2</p>
-  <h1>Three Advisor UI polish fixes</h1>
-
-  <p>Three small-but-visible items from the Advisor backlog, shipped on the same branch. New tests for each where logic changed.</p>
-
-  <h2>1. Hidden-sidebar layout fix</h2>
-  <p>When the sidebar was hidden, the Advisor&rsquo;s top bar overlapped the ambient strip and the first line of tab content &mdash; visible misalignment at the top edge. Fix: the title bar is now a flex child that always takes 44px, so content reflows cleanly whether the sidebar is open or hidden. Also added a <em>project / session</em> breadcrumb to the top bar when the Code tab is active and the sidebar is hidden.</p>
-
-  <h2>2. Sidebar-toggle hover tooltip</h2>
-  <p>Small thing, long-standing irritation. Hovering the sidebar toggle now shows a tooltip with a state-aware label &mdash; <strong>Show sidebar</strong> when it&rsquo;s hidden, <strong>Hide sidebar</strong> when it&rsquo;s visible. New <code>Tooltip</code> primitive added to the design system; documented in the UI guidelines so future hover labels go through it instead of the browser&rsquo;s default <code>title=""</code>.</p>
-
-  <h2>3. Manually renamed sessions stay renamed</h2>
-  <p>When you rename a Claude Code session via the <code>/rename</code> command in the CLI, Advisor was overwriting the new name with an auto-generated one on the next cache refresh. Now: if a user-set name exists in the session log, Advisor uses it verbatim and skips the AI-generated title entirely. The cache distinguishes the two sources so downstream readers can tell which is which. Five new tests cover the precedence rules.</p>
-
-  <h2>Verification</h2>
-  <p>All three shipped as independent commits. TypeScript clean. Full unit-test suite green after each one.</p>
-</article>
+<div class="foot">local commits &middot; nothing pushed</div>
+</div>
 </body>
 </html>

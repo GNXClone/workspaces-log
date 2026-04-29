@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CC-B-014 &mdash; Playwright UI test harness</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="left">
+    <span class="title">workspaces-log</span>
+    <span class="date">Wed 2026-04-29</span>
+  </div>
+  <nav><a href="./">&larr; standup</a></nav>
+</header>
+
+<h1>CC-B-014 &middot; Playwright UI test harness</h1>
+
+<dl class="kv">
+  <dt>id</dt>           <dd><span class="id">CC-B-014</span></dd>
+  <dt>repo</dt>         <dd>advisor</dd>
+  <dt>branch</dt>       <dd><code>feat/pittsbot-deep-link-scheme</code></dd>
+  <dt>commit</dt>       <dd><code>422fbc9</code></dd>
+  <dt>status</dt>       <dd><span class="status-ok">&#10003; harness landed</span> &middot; <span class="status-warn">tests not executable from this shell (gotcha #2)</span></dd>
+  <dt>pushed</dt>       <dd>no</dd>
+</dl>
+
+<h2>What landed</h2>
+<ul class="dashed">
+  <li>Playwright + Electron added as dev dependencies.</li>
+  <li>Harness at <code>tests/ui/</code>, runnable via <code>npm run test:ui</code>.</li>
+  <li>Launches the <em>prebuilt</em> bundle (<code>dist-electron/main.js</code>) &mdash; same binary the DMG ships.</li>
+  <li>Bedrock mock: <code>ADVISOR_MOCK_BEDROCK=1</code> short-circuits every AI-service call to deterministic stubs. No AWS creds, no network.</li>
+</ul>
+
+<h2>Coverage (initial)</h2>
+<ul class="dashed">
+  <li>Smoke per tab &mdash; does each one load?</li>
+  <li>Ambient strip renders with expected content.</li>
+  <li>Code-tab hidden-sidebar layout (regression guard for the fix from Tuesday).</li>
+  <li>Cmd+1 through Cmd+5 tab navigation.</li>
+</ul>
+
+<h2>Annotated failure screenshots</h2>
+<ul class="dashed">
+  <li>On fail: capture screenshot, overlay arrows/boxes/labels on the broken region using <code>sharp</code>.</li>
+  <li>Playwright report includes the annotated PNG, not raw stdout.</li>
+  <li>Result: you see <em>what</em> broke, not just that it broke.</li>
+</ul>
+
+<h2>Two gotchas documented</h2>
+<ul class="dashed">
+  <li><strong>Mock env var read once</strong> at module load. Flipping at runtime has no effect &mdash; restart the process.</li>
+  <li><strong>Parent-death SIGTRAP</strong> when launched from a non-Aqua shell (certain sudo contexts). Fix: wrap with <code>launchctl asuser</code>. Documented in <code>docs/advisor-implementation-notes.md</code>.</li>
+</ul>
+
+<h2>Decisions on the fork</h2>
+<ul class="dashed">
+  <li><strong>Launch the prebuilt bundle, not <code>npm run dev</code>.</strong> Playwright&rsquo;s <code>_electron.launch</code> handles bootstrap differently than spawning the dev server. Use the DMG-ish shape so tests reflect production.</li>
+  <li>Consequence: main-process edits require <code>npx vite build</code> before <code>npm run test:ui</code>.</li>
+</ul>
+
+<div class="files">
+  <span class="lbl">Files</span>
+  <code>electron/bedrock.ts</code> &middot; <code>package.json</code> &middot; <code>playwright.config.ts</code>
+  &middot; <code>tests/ui/*.spec.ts</code> &middot; <code>tests/ui/utils/annotate.ts</code>
+  &middot; <code>docs/advisor-implementation-notes.md</code> &middot; <code>docs/cc-backlog.md</code>
+</div>
+
+<div class="ask">
+  <span class="label">Ask</span>
+  <a href="https://github.com/GNXClone/workspaces-log/issues/new?title=%5BCC-B-014%5D+Question&labels=standup-question%2CCC-B-014" target="_blank" rel="noopener">Ask about CC-B-014</a>
+  <span class="aside">opens a GitHub issue pre-tagged</span>
+</div>
+<div class="foot">local commit &middot; not pushed</div>
+</div>
+</body>
+</html>

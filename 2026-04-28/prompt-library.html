@@ -3,38 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prompt library &mdash; Apr 28</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Prompt library &mdash; Tue Apr 28</title>
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<div class="masthead">
-  <div class="name">Workspaces &nbsp;&middot;&nbsp; Standups</div>
-  <div class="date">Tuesday &mdash; April 28, 2026</div>
+<div class="wrap">
+<header>
+  <div class="left">
+    <span class="title">workspaces-log</span>
+    <span class="date">Tue 2026-04-28</span>
+  </div>
+  <nav><a href="./">&larr; standup</a></nav>
+</header>
+
+<h1>Reusable prompt library</h1>
+
+<dl class="kv">
+  <dt>where</dt>   <dd><code>docs/prompts/</code> in the Advisor repo</dd>
+  <dt>branch</dt>  <dd><code>feat/pittsbot-deep-link-scheme</code></dd>
+  <dt>format</dt>  <dd>one <code>.md</code> per macro, plus <code>README.md</code> index</dd>
+</dl>
+
+<h2>What&rsquo;s in it</h2>
+<ul class="dashed">
+  <li><strong>build-mission-brief</strong> &mdash; long-form template for dispatching a multi-hour autonomous build. Defines scope, done criteria, failure rules, report format.</li>
+  <li><strong>smoke-test</strong> &mdash; post-build verification. Start dev, hit each tab, check log output, report.</li>
+  <li><strong>write-user-docs</strong> &mdash; generate user-facing documentation when a capability ships.</li>
+  <li>Placeholder for <strong>write-retrospective</strong> after the first meaningful milestone.</li>
+</ul>
+
+<h2>Why</h2>
+<ul class="dashed">
+  <li>Mission briefs used to be rewritten from scratch each time &mdash; they drift.</li>
+  <li>A stored version means the next build uses the same failure rules, the same report format, the same stop conditions. Compounds over time.</li>
+</ul>
+
+<div class="ask">
+  <span class="label">Ask</span>
+  <a href="https://github.com/GNXClone/workspaces-log/issues/new?title=%5BPrompt+library%5D+Question&labels=standup-question%2Cprompt-library" target="_blank" rel="noopener">Ask about the prompt library</a>
 </div>
-<article>
-  <a class="back" href="./">&larr; Back to standup</a>
-  <p class="kicker">Item 1</p>
-  <h1>Reusable prompt library</h1>
-
-  <p>Set up a dedicated folder in the Advisor repo for prompt macros &mdash; reusable instructions we hand to AI sessions for common, repeatable jobs. Before today these lived in chat scrollback; easy to lose, hard to share.</p>
-
-  <h2>Where it lives</h2>
-  <p><code>docs/prompts/</code> in the Advisor repo, on branch <code>feat/pittsbot-deep-link-scheme</code>. One <code>.md</code> file per prompt, plus a <code>README.md</code> index.</p>
-
-  <h2>What&rsquo;s in it today</h2>
-  <ul>
-    <li><strong>build-mission-brief</strong> &mdash; the long-form template for dispatching a multi-hour autonomous build. Defines scope, done criteria, failure rules, report format.</li>
-    <li><strong>smoke-test</strong> &mdash; post-build verification. Start the dev build, hit each tab, check log output, report findings.</li>
-    <li><strong>write-user-docs</strong> &mdash; generate user-facing documentation when a capability ships or shifts.</li>
-  </ul>
-
-  <h2>Why it matters</h2>
-  <p>Consistency. Every time a mission brief is written from scratch, it drifts. A stored version means the next build uses the same failure rules, the same report format, the same stop conditions &mdash; which compounds over time.</p>
-
-  <p>A placeholder was left for a future <strong>write-retrospective</strong> prompt to be authored after the first meaningful milestone ships.</p>
-</article>
+<div class="foot">local commits &middot; nothing pushed</div>
+</div>
 </body>
 </html>

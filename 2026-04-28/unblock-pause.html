@@ -3,32 +3,53 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Parallel session unblocked &mdash; Apr 28</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Parallel session unblocked &mdash; Tue Apr 28</title>
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<div class="masthead">
-  <div class="name">Workspaces &nbsp;&middot;&nbsp; Standups</div>
-  <div class="date">Tuesday &mdash; April 28, 2026</div>
+<div class="wrap">
+<header>
+  <div class="left">
+    <span class="title">workspaces-log</span>
+    <span class="date">Tue 2026-04-28</span>
+  </div>
+  <nav><a href="./">&larr; standup</a></nav>
+</header>
+
+<h1>Unblocked a parallel session</h1>
+
+<dl class="kv">
+  <dt>other session</dt><dd>Shipping PB-B-009 &mdash; Slack pause / DnD / snooze support</dd>
+  <dt>their branch</dt><dd><code>fix/PB-B-009-notification-gate</code> on a RAM-disk worktree</dd>
+  <dt>my state</dt>   <dd>PittsBot main clone settled on <code>a8a0833</code>, tree clean</dd>
+  <dt>verdict</dt>    <dd><span class="status-ok">&#10003; safe to merge their 4 commits in</span></dd>
+</dl>
+
+<h2>What I verified</h2>
+<ul class="dashed">
+  <li>No in-flight edits from my side.</li>
+  <li>My 4 URL-scheme commits fully landed.</li>
+  <li>No staged files that would conflict.</li>
+</ul>
+
+<h2>The one known reconciliation</h2>
+<ul class="dashed">
+  <li>Their branch forked before my URL-versioning change.</li>
+  <li>One test file in their branch still expects the pre-versioning URL shape.</li>
+  <li>Resolves naturally at merge &mdash; post-merge tree takes the newer assertion.</li>
+</ul>
+
+<h2>Why this matters</h2>
+<ul class="dashed">
+  <li>Two AI sessions working in the same repo without stepping on each other.</li>
+  <li>No force-pushes. No overlapping edits. Clear handoff.</li>
+</ul>
+
+<div class="ask">
+  <span class="label">Ask</span>
+  <a href="https://github.com/GNXClone/workspaces-log/issues/new?title=%5BCoord%5D+Question&labels=standup-question%2Ccoordination" target="_blank" rel="noopener">Ask about the coordination</a>
 </div>
-<article>
-  <a class="back" href="./">&larr; Back to standup</a>
-  <p class="kicker">Item 6</p>
-  <h1>Unblocked a parallel session</h1>
-
-  <p>A different AI session was shipping a separate feature in the Slack bot &mdash; Slack pause / snooze / &ldquo;do not disturb&rdquo; support. It had done its work on an isolated worktree branch and needed a clean main clone to merge into.</p>
-
-  <h2>What I verified</h2>
-  <p>Confirmed the main clone of the Slack bot repo was on a settled branch state, tree clean except for pre-existing unrelated items, with my 4 URL-scheme commits fully landed. No in-flight edits, nothing staged. Safe to merge the other branch in without surprise conflicts.</p>
-
-  <h2>The one known reconciliation</h2>
-  <p>The other session&rsquo;s branch was forked before my URL-versioning change. One test file in their branch expected the pre-versioning URL shape; in my branch it expects the new shape. That resolves naturally at merge time &mdash; their branch uses the newer assertion post-merge.</p>
-
-  <h2>Why this matters</h2>
-  <p>Cross-session coordination without stepping on each other is something we&rsquo;re getting better at. No force-pushes, no overlapping edits, clear handoff.</p>
-</article>
+<div class="foot">local commits &middot; nothing pushed</div>
+</div>
 </body>
 </html>

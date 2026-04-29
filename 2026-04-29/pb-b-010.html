@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PB-B-010 &mdash; launchd status reads ppid live</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="left">
+    <span class="title">workspaces-log</span>
+    <span class="date">Wed 2026-04-29</span>
+  </div>
+  <nav><a href="./">&larr; standup</a></nav>
+</header>
+
+<h1>PB-B-010 &middot; Yellow-circle stale after launchd relaunch</h1>
+
+<dl class="kv">
+  <dt>id</dt>           <dd><span class="id">PB-B-010</span></dd>
+  <dt>repo</dt>         <dd>pittsbot</dd>
+  <dt>branch</dt>       <dd><code>fix/pb-backlog-2026-04-28</code></dd>
+  <dt>commit</dt>       <dd><code>e2dba6d</code></dd>
+  <dt>status</dt>       <dd><span class="status-ok">&#10003; landed, 6 tests pass</span></dd>
+  <dt>pushed</dt>       <dd>no</dd>
+</dl>
+
+<h2>Symptom</h2>
+<ul class="dashed">
+  <li>Status indicator stayed yellow after launchd relaunched PittsBot.</li>
+  <li>UI lied about process health &mdash; effectively frozen on the first PID observed.</li>
+</ul>
+
+<h2>Root cause</h2>
+<ul class="dashed">
+  <li><code>launchd_status.current()</code> cached the first-observed parent PID via <code>lru_cache</code>.</li>
+  <li>After relaunch the parent PID changed; the cached reader never re-read <code>os.getppid()</code>.</li>
+  <li>So the indicator compared against a dead ancestor and refused to flip.</li>
+</ul>
+
+<h2>Fix</h2>
+<ul class="dashed">
+  <li>Dropped the cache.</li>
+  <li><code>current()</code> now re-reads <code>os.getppid()</code> live on every call.</li>
+  <li>Replaced cached-semantics test with a re-read test that flips ppid mid-run and verifies the status tracks the change.</li>
+</ul>
+
+<h2>Why it&rsquo;s fine to do this</h2>
+<ul class="dashed">
+  <li><code>os.getppid()</code> is a syscall, nanoseconds. The cache was never load-bearing.</li>
+  <li>Silent-staleness bugs are the worst kind; re-reading is pure improvement.</li>
+</ul>
+
+<div class="files">
+  <span class="lbl">Files</span>
+  <code>src/launchd_status.py</code> &nbsp; <code>tests/test_launchd_status.py</code>
+</div>
+
+<div class="ask">
+  <span class="label">Ask</span>
+  <a href="https://github.com/GNXClone/workspaces-log/issues/new?title=%5BPB-B-010%5D+Question&labels=standup-question%2CPB-B-010" target="_blank" rel="noopener">Ask about PB-B-010</a>
+  <span class="aside">opens a GitHub issue pre-tagged</span>
+</div>
+<div class="foot">local commit &middot; not pushed</div>
+</div>
+</body>
+</html>

@@ -3,54 +3,65 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Standup — Tuesday, April 28, 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Standup &mdash; Tue Apr 28</title>
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<div class="masthead">
-  <div class="name">Workspaces &nbsp;&middot;&nbsp; Standups</div>
-  <div class="date">Tuesday &mdash; April 28, 2026</div>
+<div class="wrap">
+<header>
+  <div class="left">
+    <span class="title">workspaces-log</span>
+    <span class="date">Tue 2026-04-28</span>
+  </div>
+  <nav><a href="../">index</a></nav>
+</header>
+
+<h1>Tuesday standup</h1>
+<p class="lead">URL scheme shipped end-to-end across two repos; three Advisor UI polish fixes; reusable prompt library set up; test infra work.</p>
+
+<h2>Shipped</h2>
+<ul class="items">
+  <li><a class="row" href="url-scheme.html">
+    <span class="idcell">protocol</span>
+    <span class="line"><span class="repo">advisor+pittsbot</span>Clickable Slack-to-Advisor links, six view types, shared spec</span>
+    <span class="meta">9 commits, 2 repos</span>
+  </a></li>
+  <li><a class="row" href="url-scheme-config.html">
+    <span class="idcell">config</span>
+    <span class="line"><span class="repo">advisor+pittsbot</span>URL prefix is per-install so the protocol ships under other bot names</span>
+    <span class="meta">default <code>pittsbot</code></span>
+  </a></li>
+  <li><a class="row" href="advisor-polish.html">
+    <span class="idcell">ui</span>
+    <span class="line"><span class="repo">advisor</span>3 polish fixes: hidden-sidebar layout, hover tooltip, <code>/rename</code> precedence</span>
+    <span class="meta">5 new tests</span>
+  </a></li>
+  <li><a class="row" href="prompt-library.html">
+    <span class="idcell">process</span>
+    <span class="line"><span class="repo">advisor</span>Reusable prompt library in the Advisor repo</span>
+    <span class="meta">build &middot; smoke &middot; docs</span>
+  </a></li>
+  <li><a class="row" href="tests-green.html">
+    <span class="idcell">tests</span>
+    <span class="line">Tests green across both repos</span>
+    <span class="meta">272 green total</span>
+  </a></li>
+  <li><a class="row" href="unblock-pause.html">
+    <span class="idcell">coord</span>
+    <span class="line"><span class="repo">pittsbot</span>Unblocked parallel session shipping Slack pause/snooze</span>
+    <span class="meta">clean handoff</span>
+  </a></li>
+</ul>
+
+<h2>Status</h2>
+<p><span class="status-ok">&#10003; All tests green</span> &nbsp;&middot;&nbsp; Local commits only &middot; Nothing pushed.</p>
+
+<div class="ask">
+  <span class="label">Questions</span>
+  <a href="https://github.com/GNXClone/workspaces-log/issues/new?title=%5BTue+Apr+28%5D+Question&labels=standup-question" target="_blank" rel="noopener">Ask about Tuesday</a>
+  <span class="aside">or use the per-item button on the detail page</span>
 </div>
-<article>
-  <a class="back" href="../">&larr; Index</a>
-  <p class="kicker">What shipped</p>
-  <h1>Tuesday standup</h1>
-  <ul class="bullets">
-    <li>
-      <a href="prompt-library.html">Reusable prompt library in Advisor repo</a>
-      <div class="meta">Standard way to run common jobs</div>
-    </li>
-    <li>
-      <a href="advisor-polish.html">3 Advisor UI polish fixes shipped</a>
-      <div class="meta">Layout, tooltip, rename-titles &mdash; tests green</div>
-    </li>
-    <li>
-      <a href="url-scheme.html">Designed + shipped clickable Slack-to-Advisor links</a>
-      <div class="meta">6 link types, both sides working</div>
-    </li>
-    <li>
-      <a href="url-scheme-config.html">URL prefix is configurable</a>
-      <div class="meta">Same protocol can ship under other bot names</div>
-    </li>
-    <li>
-      <a href="tests-green.html">Shared spec doc, identical in both repos &middot; 272 tests green</a>
-      <div class="meta">Local commits only, nothing pushed</div>
-    </li>
-    <li>
-      <a href="unblock-pause.html">Unblocked parallel session shipping Slack pause/snooze</a>
-      <div class="meta">Coordination with another Claude session</div>
-    </li>
-    <li>
-      <a href="playwright-backlog.html">Playwright UI test harness shipped</a>
-      <div class="meta">With auto-annotated failure screenshots</div>
-    </li>
-  </ul>
-  <hr>
-  <p class="kicker">Tomorrow</p>
-  <p>Click-test the 6 link types end-to-end once the next Advisor build lands.</p>
-</article>
+<div class="foot">local commits &middot; nothing pushed</div>
+</div>
 </body>
 </html>

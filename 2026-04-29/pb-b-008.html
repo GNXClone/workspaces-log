@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PB-B-008 &mdash; wide tables rewritten as bullets</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="left">
+    <span class="title">workspaces-log</span>
+    <span class="date">Wed 2026-04-29</span>
+  </div>
+  <nav><a href="./">&larr; standup</a></nav>
+</header>
+
+<h1>PB-B-008 &middot; Wide Markdown tables mangled in Slack</h1>
+
+<dl class="kv">
+  <dt>id</dt>           <dd><span class="id">PB-B-008</span></dd>
+  <dt>repo</dt>         <dd>pittsbot</dd>
+  <dt>branch</dt>       <dd><code>fix/pb-backlog-2026-04-28</code></dd>
+  <dt>commit</dt>       <dd><code>f57b23b</code></dd>
+  <dt>status</dt>       <dd><span class="status-ok">&#10003; landed, 40 tests pass</span></dd>
+  <dt>pushed</dt>       <dd>no</dd>
+</dl>
+
+<h2>Symptom</h2>
+<ul class="dashed">
+  <li>When the bot replied with a Markdown table, Slack showed it in a monospace code block that wraps instead of scrolling.</li>
+  <li>Wide rows got visually shattered &mdash; separator row broke into multiple dash runs, columns went out of alignment.</li>
+</ul>
+
+<h2>Root cause</h2>
+<ul class="dashed">
+  <li>Slack mrkdwn has no real table support.</li>
+  <li>Old fallback: wrap the table in a code block. For anything over ~80 chars per row this is worse than useless.</li>
+</ul>
+
+<h2>Fix</h2>
+<ul class="dashed">
+  <li>Detect pipe tables in the replyformatter.</li>
+  <li>Rewrite each body row as a bullet joining <code>header: value</code> fields with <code>&mdash;</code>.</li>
+  <li>Slack wraps prose gracefully, so bullets stay readable at any row width.</li>
+  <li>Tables inside fenced code blocks are left alone (those are intentional).</li>
+  <li>Malformed tables left literal (don&rsquo;t break on bad input).</li>
+</ul>
+
+<h2>Decision on the fork</h2>
+<ul class="dashed">
+  <li><strong>Bullets, not file upload.</strong> Backlog spec mentioned a file-upload escalation for very wide tables; deferred.</li>
+  <li>File upload would need <code>files:write</code> scope verification, a new attachment path in <code>pb-notify</code>, a 2nd-message error handling path, and a thread-reply-vs-channel decision. Bullets are a strict improvement for every observed case.</li>
+  <li>Commit message documents the deferral. Escalation path stays open if a concrete case forces it.</li>
+</ul>
+
+<div class="files">
+  <span class="lbl">Files</span>
+  <code>src/mrkdwn.py</code> &nbsp; <code>tests/test_mrkdwn.py</code>
+</div>
+
+<div class="ask">
+  <span class="label">Ask</span>
+  <a href="https://github.com/GNXClone/workspaces-log/issues/new?title=%5BPB-B-008%5D+Question&labels=standup-question%2CPB-B-008" target="_blank" rel="noopener">Ask about PB-B-008</a>
+  <span class="aside">opens a GitHub issue pre-tagged</span>
+</div>
+<div class="foot">local commit &middot; not pushed</div>
+</div>
+</body>
+</html>

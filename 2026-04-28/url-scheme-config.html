@@ -3,38 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Configurable URL prefix &mdash; Apr 28</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>URL scheme config &mdash; Tue Apr 28</title>
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<div class="masthead">
-  <div class="name">Workspaces &nbsp;&middot;&nbsp; Standups</div>
-  <div class="date">Tuesday &mdash; April 28, 2026</div>
+<div class="wrap">
+<header>
+  <div class="left">
+    <span class="title">workspaces-log</span>
+    <span class="date">Tue 2026-04-28</span>
+  </div>
+  <nav><a href="./">&larr; standup</a></nav>
+</header>
+
+<h1>URL prefix is per-install</h1>
+
+<dl class="kv">
+  <dt>why</dt>   <dd>Same protocol can ship under other bot names later without code change</dd>
+  <dt>default</dt><dd><code>pittsbot</code> &mdash; zero migration for current install</dd>
+  <dt>advisor</dt><dd><code>Settings.urlSchemeName</code>, read once at app-ready</dd>
+  <dt>pittsbot</dt><dd><code>url_scheme_name</code> in <code>state/hook-config.json</code>, read per call</dd>
+</dl>
+
+<h2>The edge case we documented</h2>
+<ul class="dashed">
+  <li>macOS reads the registered URL scheme from the app bundle at <em>install</em> time, not runtime.</li>
+  <li>So changing the prefix for a new deploy also needs a matching bundle entry + rebuild + reinstall.</li>
+  <li>Documented in the spec so nobody spins on it later.</li>
+</ul>
+
+<h2>Tested</h2>
+<ul class="dashed">
+  <li>Both sides have a scheme-override test that monkeypatches the config to a different prefix and asserts URLs flip accordingly.</li>
+  <li>The indirection is real, not cosmetic.</li>
+</ul>
+
+<div class="ask">
+  <span class="label">Ask</span>
+  <a href="https://github.com/GNXClone/workspaces-log/issues/new?title=%5BURL+scheme+config%5D+Question&labels=standup-question%2Curl-scheme" target="_blank" rel="noopener">Ask about the scheme config</a>
 </div>
-<article>
-  <a class="back" href="./">&larr; Back to standup</a>
-  <p class="kicker">Item 4</p>
-  <h1>URL prefix is per-install</h1>
-
-  <p>When we designed the protocol, there was a temptation to hardcode the prefix everywhere. That would lock the protocol to one specific deploy. Instead, the prefix is now a per-install config value on both sides.</p>
-
-  <h2>What this buys</h2>
-  <p>The same protocol ships unchanged under different bot names. The default stays the current name, which means zero migration for the running install. A future teammate who wants to run their own bot under a different prefix flips one config on each side + rebuilds; no code change.</p>
-
-  <h2>Where the value lives</h2>
-  <ul>
-    <li><strong>Advisor:</strong> a new <code>urlSchemeName</code> setting in its persisted config. Read once when the app starts, before registering the protocol with macOS.</li>
-    <li><strong>Slack bot:</strong> a new <code>url_scheme_name</code> key in its hook config. Read per call, so a live config update takes effect on the next link emitted.</li>
-  </ul>
-
-  <h2>The edge case we documented</h2>
-  <p>macOS reads the registered URL scheme from the app bundle at install time, not at runtime. So a deploy changing the prefix to something new also has to rebuild the Advisor <code>.app</code> with a matching bundle entry. This is documented in the spec so nobody spins on it later.</p>
-
-  <h2>Tested</h2>
-  <p>Unit tests on both sides include a &ldquo;scheme override&rdquo; case that flips the config to a different prefix via monkeypatching and confirms the URLs flip accordingly. The indirection is real, not cosmetic.</p>
-</article>
+<div class="foot">local commits &middot; nothing pushed</div>
+</div>
 </body>
 </html>
